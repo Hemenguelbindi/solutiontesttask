@@ -1,0 +1,21 @@
+version: "3.9"
+   
+services:
+  app_db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - .env
+  app_django:
+    build: .
+    working_dir: /usr/src/app
+    tty: true
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8800:8800"
+    env_file:
+      - .env
+    depends_on:
+      - app_db
