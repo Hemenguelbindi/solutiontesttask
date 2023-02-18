@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.11"
 environs = "^9.5.0"
 psycopg2 = "^2.9.5"
+stripe = "^5.2.0"
 
 [tool.poetry.group.dev.dependencies]
 Django = "^4.1.7"

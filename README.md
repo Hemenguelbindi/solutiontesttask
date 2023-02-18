@@ -10,7 +10,7 @@
   - PosgrestSQL
   - python 3.11
 
-## Неоходимые переменные окружеиня:
+## Неоходимые переменные окружениня:
 
 ```env
 TOKEN_DJANGO_APP=Django_SECRET_KEY
@@ -26,5 +26,8 @@ PRODUCT_USER={ADMIN_USER}
 PRODUCT_PASSWORD={PASSWORD}
 PRODUCT_HOST={HOST_Database}
 PRODUCT_PORT={PORT_Database}
+STRIPE_PUBLIC_KEY={PUPLIK_KEY}
+STRIPE_SECRET_KEY={SECTEY_KEY}
+STRIP_WEBHOOK={WEBHOOK}
 ```
 
