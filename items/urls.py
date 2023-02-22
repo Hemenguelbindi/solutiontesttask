@@ -1,9 +1,7 @@
 from django.urls import path
-from .views import CreateCheckoutSessionView, ListView, ItemView
-
+from . import views
 
 urlpatterns = [
-    path('', ListView.as_view(), name='All Idem' ),
-    path("buy/<int>/", CreateCheckoutSessionView.as_view(), name="Buy"),
-    path("item/<int>/", ItemView.as_view(), name="Item"),
+    path('buy/<int:id>/', views.get_session_id, name='get_session_id'),
+    path('item/<int:id>/', views.item_detail, name='item_detail'),
 ]

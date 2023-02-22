@@ -12,7 +12,7 @@ SECRET_KEY = env.str('TOKEN_DJANGO_APP')
 DEBUG = env('DEV')
 
 
-ALLOWED_HOSTS = [env.str('APP_HOST')]
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [

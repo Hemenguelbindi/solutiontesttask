@@ -1,21 +1,36 @@
-version: "3.9"
-   
+version: '3'
+
 services:
-  app_db:
+  # Сервис с базой данных PostgreSQL
+  db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-    env_file:
-      - .env
-  app_django:
-    build: .
-    working_dir: /usr/src/app
-    tty: true
-    volumes:
-      - .:/usr/src/app
+      - db_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${PRODUCT_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_PASSWORD}
+      POSTGRES_DB: ${NAME_DB}
     ports:
-      - "8800:8800"
-    env_file:
-      - .env
+      - "${PRODUCT_PORT}:5432"
+
+  # Сервис с Django и Poetry
+  web:
+    build: .
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_SECRET_KEY: ${TOKEN_DJANGO_APP}
+      DJANGO_DEBUG: ${DEV}
+      DJANGO_ALLOWED_HOSTS: ${APP_HOST}
+      DATABASE_URL: postgres://${PRODUCT_USER}:${PRODUCT_PASSWORD}@db:5432/${NAME_DB}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK}
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
     depends_on:
-      - app_db
+      - db
+
+volumes:
+  db_data:

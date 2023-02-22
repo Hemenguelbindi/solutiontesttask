@@ -1,0 +1,21 @@
+<h1>{{ item.name }}</h1>
+<p>{{ item.description }}</p>
+<button id="checkout-button">Buy now for ${{ item.price }}</button>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document.getElementById('checkout-button').addEventListener('click', function () {
+        fetch('/buy/{{ item.pk }}/')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({sessionId: session.session_id});
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+    });
+</script>
